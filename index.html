@@ -13,7 +13,6 @@
       --text:#1c1c1c;
       --accent:#ff4d6d;
       --accent-dark:#e23c5a;
-      --gold:#ffb703;
     }
     *{box-sizing:border-box}
     body{
@@ -43,11 +42,9 @@
     }
 
     .emoji-row{font-size:40px; margin-bottom:.2rem; user-select:none; text-shadow:0 2px 4px rgba(0,0,0,.08)}
-
-    h1{margin:.2rem 0 .8rem; font-size:clamp(1.6rem,5vw,2.6rem); font-weight:800; letter-spacing:.2px}
+    h1{margin:.2rem 0 .8rem; font-size:clamp(1.6rem,5vw,2.6rem); font-weight:800}
     #type{display:inline-block; border-right:3px solid var(--accent); animation:caret 1s step-end infinite}
     @keyframes caret{50%{border-color:transparent}}
-
     .sub{margin:.2rem auto 1.1rem; font-size:clamp(1rem,3.7vw,1.2rem); max-width:60ch}
 
     .bar{display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; align-items:center; margin:.8rem 0 1.1rem}
@@ -68,34 +65,29 @@
     .secondary{background:#f1f1f1; color:#444; box-shadow:0 6px 14px rgba(0,0,0,.08)}
     .secondary:hover{transform:translateY(-1px)}
 
-    /* Gallery that unlocks at midnight 15 Feb 2026 */
     .gallery{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px; margin:1rem auto 0; max-width:760px}
     .tile{
       position:relative; overflow:hidden; border-radius:16px; background:#f6f6f6;
       box-shadow:0 10px 24px rgba(0,0,0,.12);
       aspect-ratio:4/3;
-      display:grid; place-items:center;
+      display:grid; place-items:center; cursor:pointer;
     }
-    .tile img{width:100%; height:100%; object-fit:cover; display:block; filter:blur(0)}
+    .tile img{width:100%; height:100%; object-fit:cover; display:block}
     .tile.locked img{filter:blur(14px) grayscale(20%)}
     .lock-overlay{
       position:absolute; inset:0; display:grid; place-items:center;
       background:linear-gradient(to bottom, rgba(255,255,255,.55), rgba(255,255,255,.75));
       color:#333; font-weight:700; text-align:center; padding:10px;
     }
-    .tile.locked .lock-overlay{display:grid}
     .tile.unlocked .lock-overlay{display:none}
 
-    /* Lightbox */
     #lightbox{position:fixed; inset:0; background:rgba(0,0,0,.75); display:none; place-items:center; z-index:80}
     #lightbox.show{display:grid}
     #lightbox img{max-width:92vw; max-height:88vh; border-radius:14px; box-shadow:0 24px 60px rgba(0,0,0,.35)}
     #lightbox .close{position:absolute; top:14px; right:14px; background:#fff; border:0; border-radius:999px; padding:.5rem .8rem; font-weight:800; cursor:pointer}
 
-    /* Confetti and fireworks canvases */
     canvas#confetti, canvas#fireworks{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:1}
 
-    /* Preview banner */
     #previewBanner{
       position:fixed; top:12px; left:50%; transform:translateX(-50%);
       background:#222; color:#fff; padding:.45rem .8rem; border-radius:999px; font-size:.9rem;
@@ -121,23 +113,21 @@
 
     <div class="panel">
       <div class="countdown" id="countdown">Counting down to your special day…</div>
-      <div class="mini" id="countMini">This shows days, hours, minutes, and seconds to 15‑02‑2026 at 12:00 am.</div>
+      <div class="mini" id="countMini">Unlock happens at 12:00 am on 15‑02‑2026 (your local time).</div>
     </div>
 
     <div class="btns">
       <button class="primary" id="wishBtn">Make a wish ✨</button>
       <button class="secondary" id="confettiBtn">More confetti 🎉</button>
-      <!-- Share button removed as requested -->
     </div>
 
     <section class="gallery" id="gallery" aria-label="Photo gallery">
-      <!-- Replace photo1.jpg and photo2.jpg with your actual file names after uploading -->
-      <figure class="tile locked" data-src="photo1.jpg">
-        <img src="photo1.jpg" alt="Photo 1, locked until 15 February" loading="lazy">
+      <figure class="tile locked" data-src="photo1.jpeg">
+        <img src="photo1.jpeg" alt="Locked photo 1" loading="lazy">
         <figcaption class="lock-overlay">Opens at 12:00 am, 15 Feb</figcaption>
       </figure>
-      <figure class="tile locked" data-src="photo2.jpg">
-        <img src="photo2.jpg" alt="Photo 2, locked until 15 February" loading="lazy">
+      <figure class="tile locked" data-src="photo2.jpeg">
+        <img src="photo2.jpeg" alt="Locked photo 2" loading="lazy">
         <figcaption class="lock-overlay">Opens at 12:00 am, 15 Feb</figcaption>
       </figure>
     </section>
@@ -154,7 +144,6 @@
   <canvas id="fireworks"></canvas>
 
   <script>
-    /* Personalisation (static defaults, but you may pass ?name= and ?from= if you like) */
     const params = new URLSearchParams(location.search);
     const toName   = (params.get('name') || 'Vidhi').replace(/[<>]/g,'').trim();
     const fromName = (params.get('from') || 'Jarnil').replace(/[<>]/g,'').trim();
@@ -165,18 +154,11 @@
     document.getElementById('sub').textContent = `${fromName} wishes you the happiest birthday and loves you forever.`;
     document.getElementById('toPill').textContent   = `For: ${toName}`;
     document.getElementById('fromPill').textContent = `From: ${fromName}`;
+    const typeEl = document.getElementById('type'); typeEl.textContent=''; let ti=0;
+    (function typeNext(){ if(ti<=typeText.length){ typeEl.textContent=typeText.slice(0,ti++); setTimeout(typeNext,60);} })();
 
-    /* Typewriter headline */
-    const typeEl = document.getElementById('type');
-    typeEl.textContent = '';
-    let ti = 0;
-    (function typeNext(){ if (ti <= typeText.length) { typeEl.textContent = typeText.slice(0, ti++); setTimeout(typeNext, 60); } })();
-
-    /* Target unlock: 15-02-2026 00:00:00 local time (DD-MM-YYYY) */
-    // Months are 0-based in JS Date, so February is 1
     const unlockAt = new Date(2026, 1, 15, 0, 0, 0);
 
-    /* Countdown */
     const cdEl = document.getElementById('countdown');
     const mini = document.getElementById('countMini');
     function updateCountdown(){
@@ -194,26 +176,18 @@
       const s = Math.floor((diff % (60*1000)) / 1000);
       cdEl.textContent = `Countdown: ${d} days, ${h} hours, ${m} minutes, ${s} seconds`;
     }
-    setInterval(updateCountdown, 1000);
-    updateCountdown();
+    setInterval(updateCountdown, 1000); updateCountdown();
 
-    /* Confetti engine */
     (function(){
       const canvas = document.getElementById('confetti');
       const ctx = canvas.getContext('2d'); let W,H, pieces=[], running=false;
       function resize(){ W=canvas.width=innerWidth; H=canvas.height=innerHeight; }
       addEventListener('resize', resize); resize();
-
       function spawn(n=220){
         for(let i=0;i<n;i++){
-          pieces.push({
-            x:Math.random()*W, y:-10,
-            w:6+Math.random()*6, h:10+Math.random()*10,
-            vy:2+Math.random()*3.5, vx:-2+Math.random()*4,
-            rot:Math.random()*Math.PI, vr:-.2+Math.random()*.4,
-            color:`hsl(${Math.floor(Math.random()*360)},90%,60%)`,
-            life:240+Math.random()*120
-          });
+          pieces.push({x:Math.random()*W, y:-10, w:6+Math.random()*6, h:10+Math.random()*10,
+            vy:2+Math.random()*3.5, vx:-2+Math.random()*4, rot:Math.random()*Math.PI, vr:-.2+Math.random()*.4,
+            color:`hsl(${Math.floor(Math.random()*360)},90%,60%)`, life:240+Math.random()*120});
         }
         if(!running){ running=true; requestAnimationFrame(loop); }
       }
@@ -227,10 +201,9 @@
         }
         if(pieces.length) requestAnimationFrame(loop); else running=false;
       }
-      window.fireConfetti = () => { spawn(240); setTimeout(()=>spawn(180), 320); }
+      window.fireConfetti = ()=>{ spawn(240); setTimeout(()=>spawn(180), 320); }
     })();
 
-    /* Fireworks */
     (function(){
       const canvas = document.getElementById('fireworks');
       const ctx = canvas.getContext('2d'); let W,H, sparks=[];
@@ -239,8 +212,7 @@
       function burst(x, y, hue=Math.random()*360){
         const n = 120 + Math.random()*60;
         for(let i=0;i<n;i++){
-          const a = Math.random()*Math.PI*2;
-          const sp = 1 + Math.random()*4;
+          const a = Math.random()*Math.PI*2, sp = 1 + Math.random()*4;
           sparks.push({x, y, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp, life:60+Math.random()*40, hue, size:2+Math.random()*2});
         }
       }
@@ -269,33 +241,25 @@
       };
     })();
 
-    /* Balloons */
     function launchBalloons(durationMs=4000){
       const end = Date.now() + durationMs;
-      const cols = ['#ff7aa2','#ffd166','#9be7ff','#c8b6ff','#baffc9','#ffafcc'];
       const timer = setInterval(()=>{
         for(let i=0;i<5;i++){
           const b=document.createElement('div');
           b.className='balloon';
-          b.style.position='fixed';
-          b.style.bottom='-120px';
-          b.style.left = Math.random()*100 + 'vw';
-          b.style.setProperty('--drift', (Math.random()*120-60)+'px');
-          b.style.animation = `floatUp ${6+Math.random()*3}s linear forwards`;
-          b.style.transform = `scale(${0.8 + Math.random()*0.8})`;
-          b.style.width='36px'; b.style.height='44px';
-          b.style.borderRadius='50% 50% 48% 48%';
-          b.style.background = 'radial-gradient(circle at 30% 30%, #fff7 0, #fff2 24%, transparent 26%)';
-          b.style.boxShadow = 'inset -8px -10px 16px rgba(0,0,0,.12)';
-          b.style.zIndex='5';
+          b.style.position='fixed'; b.style.bottom='-120px'; b.style.left=Math.random()*100+'vw';
+          b.style.animation=`floatUp ${6+Math.random()*3}s linear forwards`;
+          b.style.transform=`scale(${0.8+Math.random()*0.8})`;
+          b.style.width='36px'; b.style.height='44px'; b.style.borderRadius='50% 50% 48% 48%';
+          b.style.background='radial-gradient(circle at 30% 30%, #fff7 0, #fff2 24%, transparent 26%), #ff7aa2';
+          b.style.boxShadow='inset -8px -10px 16px rgba(0,0,0,.12)'; b.style.zIndex='5';
           document.body.appendChild(b);
-          setTimeout(()=>b.remove(), 10000);
+          setTimeout(()=>b.remove(),10000);
         }
         if(Date.now()>end) clearInterval(timer);
-      }, 180);
+      },180);
     }
 
-    /* Gallery lock/unlock and lightbox */
     const gallery = document.getElementById('gallery');
     const tiles = Array.from(gallery.querySelectorAll('.tile'));
     const lightbox = document.getElementById('lightbox');
@@ -303,42 +267,27 @@
     const closeLightbox = document.getElementById('closeLightbox');
 
     function unlockGallery(){
-      tiles.forEach(t => {
-        t.classList.remove('locked');
-        t.classList.add('unlocked');
+      tiles.forEach(t=>{
+        t.classList.remove('locked'); t.classList.add('unlocked');
         t.querySelector('img').setAttribute('alt','Photo (unlocked)');
-        t.addEventListener('click', ()=> openLightbox(t.dataset.src), { once:false });
+        t.addEventListener('click', ()=> openLightbox(t.dataset.src));
       });
     }
-    function openLightbox(src){
-      lightboxImg.src = src;
-      lightbox.classList.add('show');
-    }
+    function openLightbox(src){ lightboxImg.src=src; lightbox.classList.add('show'); }
     function closeLB(){ lightbox.classList.remove('show'); lightboxImg.src=''; }
     closeLightbox.addEventListener('click', closeLB);
-    lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLB(); });
+    lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLB(); });
 
-    /* Buttons */
     const wishBtn = document.getElementById('wishBtn');
     const moreBtn = document.getElementById('confettiBtn');
+    wishBtn.addEventListener('click', ()=>{ fireConfetti&&fireConfetti(); fireFireworks&&fireFireworks(6); launchBalloons(5000); });
+    moreBtn.addEventListener('click', ()=> fireConfetti&&fireConfetti());
 
-    wishBtn.addEventListener('click', ()=>{
-      fireConfetti && fireConfetti();
-      fireFireworks && fireFireworks(6);
-      launchBalloons(5000);
-    });
-    moreBtn.addEventListener('click', ()=> fireConfetti && fireConfetti());
-
-    /* First load effects */
-    fireConfetti && fireConfetti();
+    fireConfetti&&fireConfetti();
     launchBalloons(3000);
 
-    /* Preview mode for private testing */
     const previewBanner = document.getElementById('previewBanner');
-    if (isPreview) {
-      previewBanner.classList.add('show');
-      unlockGallery();
-    }
+    if (isPreview) { previewBanner.classList.add('show'); unlockGallery(); }
   </script>
 </body>
 </html>
