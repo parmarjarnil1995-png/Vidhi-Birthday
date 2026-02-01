@@ -7,22 +7,14 @@
 
   <style>
     :root{
-      --bg1:#ffd6e6;
-      --bg2:#ffeef6;
-      --card:#ffffff;
-      --text:#1c1c1c;
-      --accent:#ff4d6d;
-      --accent-dark:#e23c5a;
+      --bg1:#ffd6e6; --bg2:#ffeef6; --card:#ffffff; --text:#1c1c1c;
+      --accent:#ff4d6d; --accent-dark:#e23c5a;
     }
     *{box-sizing:border-box}
     body{
       margin:0;
       font-family:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,"Apple Color Emoji","Segoe UI Emoji";
-      color:var(--text);
-      min-height:100vh;
-      display:grid;
-      place-items:center;
-      overflow-x:hidden;
+      color:var(--text); min-height:100vh; display:grid; place-items:center; overflow-x:hidden;
       background:
         radial-gradient(1200px 800px at 20% -10%, var(--bg1) 0%, transparent 70%),
         linear-gradient(160deg, var(--bg2), #ffe1ec 40%, #ffd4ea 70%, #ffeef6 100%);
@@ -31,14 +23,9 @@
     @keyframes bgShift{0%{filter:hue-rotate(0) brightness(1)}100%{filter:hue-rotate(12deg) brightness(1.05)}}
 
     .card{
-      position:relative;
-      width:min(880px,94vw);
-      background:var(--card);
-      border-radius:22px;
-      padding:2rem 1.4rem 2.2rem;
-      text-align:center;
-      box-shadow: 0 18px 50px rgba(0,0,0,.12), 0 2px 10px rgba(0,0,0,.06);
-      z-index:10;
+      position:relative; width:min(880px,94vw); background:var(--card); border-radius:22px;
+      padding:2rem 1.4rem 2.2rem; text-align:center;
+      box-shadow:0 18px 50px rgba(0,0,0,.12), 0 2px 10px rgba(0,0,0,.06); z-index:10;
     }
 
     .emoji-row{font-size:40px; margin-bottom:.2rem; user-select:none; text-shadow:0 2px 4px rgba(0,0,0,.08)}
@@ -65,229 +52,4 @@
     .secondary{background:#f1f1f1; color:#444; box-shadow:0 6px 14px rgba(0,0,0,.08)}
     .secondary:hover{transform:translateY(-1px)}
 
-    .gallery{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px; margin:1rem auto 0; max-width:760px}
-    .tile{
-      position:relative; overflow:hidden; border-radius:16px; background:#f6f6f6;
-      box-shadow:0 10px 24px rgba(0,0,0,.12);
-      aspect-ratio:4/3;
-      display:grid; place-items:center; cursor:pointer;
-    }
-    .tile img{width:100%; height:100%; object-fit:cover; display:block}
-    .tile.locked img{filter:blur(14px) grayscale(20%)}
-    .lock-overlay{
-      position:absolute; inset:0; display:grid; place-items:center;
-      background:linear-gradient(to bottom, rgba(255,255,255,.55), rgba(255,255,255,.75));
-      color:#333; font-weight:700; text-align:center; padding:10px;
-    }
-    .tile.unlocked .lock-overlay{display:none}
-
-    #lightbox{position:fixed; inset:0; background:rgba(0,0,0,.75); display:none; place-items:center; z-index:80}
-    #lightbox.show{display:grid}
-    #lightbox img{max-width:92vw; max-height:88vh; border-radius:14px; box-shadow:0 24px 60px rgba(0,0,0,.35)}
-    #lightbox .close{position:absolute; top:14px; right:14px; background:#fff; border:0; border-radius:999px; padding:.5rem .8rem; font-weight:800; cursor:pointer}
-
-    canvas#confetti, canvas#fireworks{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:1}
-
-    #previewBanner{
-      position:fixed; top:12px; left:50%; transform:translateX(-50%);
-      background:#222; color:#fff; padding:.45rem .8rem; border-radius:999px; font-size:.9rem;
-      opacity:.9; z-index:90; display:none;
-    }
-    #previewBanner.show{display:block}
-  </style>
-</head>
-<body>
-
-  <main class="card" role="main" aria-label="Birthday card">
-    <div class="emoji-row" aria-hidden="true">🎂🎈✨💖</div>
-
-    <h1><span id="type">Happy Birthday, Vidhi!</span></h1>
-
-    <p class="sub" id="sub">Jarnil wishes you the happiest birthday and loves you forever.</p>
-
-    <div class="bar">
-      <span class="pill" id="toPill">For: Vidhi</span>
-      <span class="pill" id="fromPill">From: Jarnil</span>
-      <span class="pill" id="datePill">Unlocks: 15‑02‑2026, 12:00 am</span>
-    </div>
-
-    <div class="panel">
-      <div class="countdown" id="countdown">Counting down to your special day…</div>
-      <div class="mini" id="countMini">Unlock happens at 12:00 am on 15‑02‑2026 (your local time).</div>
-    </div>
-
-    <div class="btns">
-      <button class="primary" id="wishBtn">Make a wish ✨</button>
-      <button class="secondary" id="confettiBtn">More confetti 🎉</button>
-    </div>
-
-    <section class="gallery" id="gallery" aria-label="Photo gallery">
-      <figure class="tile locked" data-src="photo1.jpeg">
-        <img src="photo1.jpeg" alt="Locked photo 1" loading="lazy">
-        <figcaption class="lock-overlay">Opens at 12:00 am, 15 Feb</figcaption>
-      </figure>
-      <figure class="tile locked" data-src="photo2.jpeg">
-        <img src="photo2.jpeg" alt="Locked photo 2" loading="lazy">
-        <figcaption class="lock-overlay">Opens at 12:00 am, 15 Feb</figcaption>
-      </figure>
-    </section>
-  </main>
-
-  <div id="previewBanner">Preview mode is on — photos are unlocked for you</div>
-
-  <div id="lightbox" aria-modal="true" role="dialog">
-    <button class="close" id="closeLightbox" aria-label="Close">✕</button>
-    <img id="lightboxImg" alt="">
-  </div>
-
-  <canvas id="confetti"></canvas>
-  <canvas id="fireworks"></canvas>
-
-  <script>
-    const params = new URLSearchParams(location.search);
-    const toName   = (params.get('name') || 'Vidhi').replace(/[<>]/g,'').trim();
-    const fromName = (params.get('from') || 'Jarnil').replace(/[<>]/g,'').trim();
-    const isPreview = params.get('preview') === '1';
-
-    const typeText = `Happy Birthday, ${toName}!`;
-    document.title = `${typeText} 🎂`;
-    document.getElementById('sub').textContent = `${fromName} wishes you the happiest birthday and loves you forever.`;
-    document.getElementById('toPill').textContent   = `For: ${toName}`;
-    document.getElementById('fromPill').textContent = `From: ${fromName}`;
-    const typeEl = document.getElementById('type'); typeEl.textContent=''; let ti=0;
-    (function typeNext(){ if(ti<=typeText.length){ typeEl.textContent=typeText.slice(0,ti++); setTimeout(typeNext,60);} })();
-
-    const unlockAt = new Date(2026, 1, 15, 0, 0, 0);
-
-    const cdEl = document.getElementById('countdown');
-    const mini = document.getElementById('countMini');
-    function updateCountdown(){
-      const now = new Date();
-      const diff = unlockAt - now;
-      if (diff <= 0) {
-        cdEl.textContent = 'It is today — happy birthday!';
-        mini.textContent = 'Photos are now unlocked below.';
-        unlockGallery();
-        return;
-      }
-      const d = Math.floor(diff / (24*60*60*1000));
-      const h = Math.floor((diff % (24*60*60*1000)) / (60*60*1000));
-      const m = Math.floor((diff % (60*60*1000)) / (60*1000));
-      const s = Math.floor((diff % (60*1000)) / 1000);
-      cdEl.textContent = `Countdown: ${d} days, ${h} hours, ${m} minutes, ${s} seconds`;
-    }
-    setInterval(updateCountdown, 1000); updateCountdown();
-
-    (function(){
-      const canvas = document.getElementById('confetti');
-      const ctx = canvas.getContext('2d'); let W,H, pieces=[], running=false;
-      function resize(){ W=canvas.width=innerWidth; H=canvas.height=innerHeight; }
-      addEventListener('resize', resize); resize();
-      function spawn(n=220){
-        for(let i=0;i<n;i++){
-          pieces.push({x:Math.random()*W, y:-10, w:6+Math.random()*6, h:10+Math.random()*10,
-            vy:2+Math.random()*3.5, vx:-2+Math.random()*4, rot:Math.random()*Math.PI, vr:-.2+Math.random()*.4,
-            color:`hsl(${Math.floor(Math.random()*360)},90%,60%)`, life:240+Math.random()*120});
-        }
-        if(!running){ running=true; requestAnimationFrame(loop); }
-      }
-      function loop(){
-        ctx.clearRect(0,0,W,H);
-        pieces = pieces.filter(p=>p.life>0 && p.y < H+40);
-        for(const p of pieces){
-          p.x+=p.vx; p.y+=p.vy; p.rot+=p.vr; p.life-=1;
-          ctx.save(); ctx.translate(p.x,p.y); ctx.rotate(p.rot);
-          ctx.fillStyle=p.color; ctx.fillRect(-p.w/2,-p.h/2,p.w,p.h); ctx.restore();
-        }
-        if(pieces.length) requestAnimationFrame(loop); else running=false;
-      }
-      window.fireConfetti = ()=>{ spawn(240); setTimeout(()=>spawn(180), 320); }
-    })();
-
-    (function(){
-      const canvas = document.getElementById('fireworks');
-      const ctx = canvas.getContext('2d'); let W,H, sparks=[];
-      function resize(){ W=canvas.width=innerWidth; H=canvas.height=innerHeight; }
-      addEventListener('resize', resize); resize();
-      function burst(x, y, hue=Math.random()*360){
-        const n = 120 + Math.random()*60;
-        for(let i=0;i<n;i++){
-          const a = Math.random()*Math.PI*2, sp = 1 + Math.random()*4;
-          sparks.push({x, y, vx:Math.cos(a)*sp, vy:Math.sin(a)*sp, life:60+Math.random()*40, hue, size:2+Math.random()*2});
-        }
-      }
-      function loop(){
-        ctx.globalCompositeOperation='destination-out';
-        ctx.fillStyle='rgba(0,0,0,0.18)';
-        ctx.fillRect(0,0,W,H);
-        ctx.globalCompositeOperation='lighter';
-        sparks = sparks.filter(s=>s.life>0);
-        for(const s of sparks){
-          s.life -= 1; s.x += s.vx; s.y += s.vy; s.vy += 0.02;
-          ctx.fillStyle = `hsla(${s.hue}, 100%, 60%, ${Math.max(0,s.life/80)})`;
-          ctx.beginPath(); ctx.arc(s.x, s.y, s.size, 0, Math.PI*2); ctx.fill();
-        }
-        requestAnimationFrame(loop);
-      }
-      loop();
-      window.fireFireworks = (count=4)=>{
-        for(let i=0;i<count;i++){
-          setTimeout(()=>{
-            const x = (innerWidth*0.15) + Math.random()*innerWidth*0.7;
-            const y = (innerHeight*0.25) + Math.random()*innerHeight*0.35;
-            burst(x,y);
-          }, i*220);
-        }
-      };
-    })();
-
-    function launchBalloons(durationMs=4000){
-      const end = Date.now() + durationMs;
-      const timer = setInterval(()=>{
-        for(let i=0;i<5;i++){
-          const b=document.createElement('div');
-          b.className='balloon';
-          b.style.position='fixed'; b.style.bottom='-120px'; b.style.left=Math.random()*100+'vw';
-          b.style.animation=`floatUp ${6+Math.random()*3}s linear forwards`;
-          b.style.transform=`scale(${0.8+Math.random()*0.8})`;
-          b.style.width='36px'; b.style.height='44px'; b.style.borderRadius='50% 50% 48% 48%';
-          b.style.background='radial-gradient(circle at 30% 30%, #fff7 0, #fff2 24%, transparent 26%), #ff7aa2';
-          b.style.boxShadow='inset -8px -10px 16px rgba(0,0,0,.12)'; b.style.zIndex='5';
-          document.body.appendChild(b);
-          setTimeout(()=>b.remove(),10000);
-        }
-        if(Date.now()>end) clearInterval(timer);
-      },180);
-    }
-
-    const gallery = document.getElementById('gallery');
-    const tiles = Array.from(gallery.querySelectorAll('.tile'));
-    const lightbox = document.getElementById('lightbox');
-    const lightboxImg = document.getElementById('lightboxImg');
-    const closeLightbox = document.getElementById('closeLightbox');
-
-    function unlockGallery(){
-      tiles.forEach(t=>{
-        t.classList.remove('locked'); t.classList.add('unlocked');
-        t.querySelector('img').setAttribute('alt','Photo (unlocked)');
-        t.addEventListener('click', ()=> openLightbox(t.dataset.src));
-      });
-    }
-    function openLightbox(src){ lightboxImg.src=src; lightbox.classList.add('show'); }
-    function closeLB(){ lightbox.classList.remove('show'); lightboxImg.src=''; }
-    closeLightbox.addEventListener('click', closeLB);
-    lightbox.addEventListener('click', (e)=>{ if(e.target===lightbox) closeLB(); });
-
-    const wishBtn = document.getElementById('wishBtn');
-    const moreBtn = document.getElementById('confettiBtn');
-    wishBtn.addEventListener('click', ()=>{ fireConfetti&&fireConfetti(); fireFireworks&&fireFireworks(6); launchBalloons(5000); });
-    moreBtn.addEventListener('click', ()=> fireConfetti&&fireConfetti());
-
-    fireConfetti&&fireConfetti();
-    launchBalloons(3000);
-
-    const previewBanner = document.getElementById('previewBanner');
-    if (isPreview) { previewBanner.classList.add('show'); unlockGallery(); }
-  </script>
-</body>
-</html>
+    /* Gallery (locked until unlock moment) */
