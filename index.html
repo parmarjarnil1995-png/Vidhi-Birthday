@@ -14,9 +14,7 @@
       --accent:#ff4d6d;
       --accent-dark:#e23c5a;
       --gold:#ffb703;
-      --yesScale:1;
     }
-
     *{box-sizing:border-box}
     body{
       margin:0;
@@ -26,241 +24,168 @@
       display:grid;
       place-items:center;
       overflow-x:hidden;
-      background: radial-gradient(1200px 800px at 20% -10%, var(--bg1) 0%, transparent 70%), linear-gradient(160deg, var(--bg2), #ffe1ec 40%, #ffd4ea 70%, #ffeef6 100%);
+      background:
+        radial-gradient(1200px 800px at 20% -10%, var(--bg1) 0%, transparent 70%),
+        linear-gradient(160deg, var(--bg2), #ffe1ec 40%, #ffd4ea 70%, #ffeef6 100%);
       animation:bgShift 16s ease-in-out infinite alternate;
     }
-    @keyframes bgShift{
-      0% { filter:hue-rotate(0deg) brightness(1); }
-      100%{ filter:hue-rotate(12deg) brightness(1.05); }
-    }
+    @keyframes bgShift{0%{filter:hue-rotate(0) brightness(1)}100%{filter:hue-rotate(12deg) brightness(1.05)}}
 
     .card{
       position:relative;
-      width:min(840px,94vw);
+      width:min(880px,94vw);
       background:var(--card);
       border-radius:22px;
       padding:2rem 1.4rem 2.2rem;
       text-align:center;
       box-shadow: 0 18px 50px rgba(0,0,0,.12), 0 2px 10px rgba(0,0,0,.06);
+      z-index:10;
     }
 
-    .emoji-row{
-      font-size:40px;
-      margin-bottom:.2rem;
-      user-select:none;
-      text-shadow:0 2px 4px rgba(0,0,0,.08);
-    }
+    .emoji-row{font-size:40px; margin-bottom:.2rem; user-select:none; text-shadow:0 2px 4px rgba(0,0,0,.08)}
 
-    h1{
-      margin:.2rem 0 .8rem;
-      font-size:clamp(1.6rem,5vw,2.6rem);
-      font-weight:800;
-      letter-spacing:.2px;
-    }
-
-    #type{
-      display:inline-block;
-      border-right:3px solid var(--accent);
-      animation:caret 1s step-end infinite;
-    }
+    h1{margin:.2rem 0 .8rem; font-size:clamp(1.6rem,5vw,2.6rem); font-weight:800; letter-spacing:.2px}
+    #type{display:inline-block; border-right:3px solid var(--accent); animation:caret 1s step-end infinite}
     @keyframes caret{50%{border-color:transparent}}
 
-    .sub{
-      margin:.2rem auto 1.1rem;
-      font-size:clamp(1rem,3.7vw,1.2rem);
-      max-width:50ch;
-    }
+    .sub{margin:.2rem auto 1.1rem; font-size:clamp(1rem,3.7vw,1.2rem); max-width:60ch}
 
-    .bar{
-      display:flex;
-      flex-wrap:wrap;
-      gap:.6rem;
-      justify-content:center;
-      align-items:center;
-      margin:.8rem 0 1.1rem;
-    }
-    .pill{
-      background:#fff4f7;
-      color:#b0364b;
-      padding:.5rem .9rem;
-      border-radius:999px;
-      box-shadow:inset 0 0 0 2px #ffd3dd;
-      font-weight:650;
-      font-size:.95rem;
-    }
+    .bar{display:flex; flex-wrap:wrap; gap:.6rem; justify-content:center; align-items:center; margin:.8rem 0 1.1rem}
+    .pill{background:#fff4f7; color:#b0364b; padding:.5rem .9rem; border-radius:999px; box-shadow:inset 0 0 0 2px #ffd3dd; font-weight:650; font-size:.95rem}
 
-    .panel{
-      display:grid;
-      gap:.6rem;
-      margin:1.2rem auto .8rem;
-    }
-    .countdown{
-      font-size:clamp(1.1rem,4.5vw,1.6rem);
-      font-weight:750;
-      letter-spacing:.5px;
-    }
-    .mini{
-      font-size:.98rem;
-      color:#646464;
-    }
+    .panel{display:grid; gap:.6rem; margin:1.2rem auto .8rem}
+    .countdown{font-size:clamp(1.1rem,4.5vw,1.6rem); font-weight:750; letter-spacing:.5px}
+    .mini{font-size:.98rem; color:#646464}
 
-    .btns{
-      display:flex;justify-content:center;gap:.8rem;flex-wrap:wrap;margin:1rem 0 .2rem;
-    }
+    .btns{display:flex; justify-content:center; gap:.8rem; flex-wrap:wrap; margin:1rem 0 .2rem}
     button{
-      border:0;border-radius:999px;cursor:pointer;user-select:none;touch-action:none;
-      padding:.9rem 1.2rem;font-size:1.05rem;font-weight:750;
+      border:0; border-radius:999px; cursor:pointer; user-select:none; touch-action:none;
+      padding:.9rem 1.2rem; font-size:1.05rem; font-weight:750;
       transition:transform .08s ease, box-shadow .12s ease, background .12s ease, color .12s ease;
     }
-    .primary{
-      background:var(--accent);color:#fff;box-shadow:0 10px 22px rgba(255,77,109,.32);
-    }
-    .primary:hover{transform:translateY(-1px);background:var(--accent-dark)}
-    .secondary{background:#f1f1f1;color:#444;box-shadow:0 6px 14px rgba(0,0,0,.08)}
+    .primary{background:var(--accent); color:#fff; box-shadow:0 10px 22px rgba(255,77,109,.32)}
+    .primary:hover{transform:translateY(-1px); background:var(--accent-dark)}
+    .secondary{background:#f1f1f1; color:#444; box-shadow:0 6px 14px rgba(0,0,0,.08)}
     .secondary:hover{transform:translateY(-1px)}
 
-    .carousel{
-      margin:1rem auto 0;
-      min-height:2.2rem;
-      font-size:clamp(1rem,3.7vw,1.2rem);
-      color:#3a3a3a;
+    /* Gallery that unlocks at midnight 15 Feb 2026 */
+    .gallery{display:grid; grid-template-columns:repeat(2, minmax(0,1fr)); gap:12px; margin:1rem auto 0; max-width:760px}
+    .tile{
+      position:relative; overflow:hidden; border-radius:16px; background:#f6f6f6;
+      box-shadow:0 10px 24px rgba(0,0,0,.12);
+      aspect-ratio:4/3;
+      display:grid; place-items:center;
     }
-    .fade{animation:fade 480ms ease}
-    @keyframes fade{from{opacity:0; transform:translateY(4px)} to{opacity:1; transform:translateY(0)}}
-
-    /* Balloons */
-    .balloon{
-      position:fixed; bottom:-120px; width:36px; height:44px; border-radius:50% 50% 48% 48%;
-      background: radial-gradient(circle at 30% 30%, #fff7 0, #fff2 24%, transparent 26%), var(--bcol, #ff7aa2);
-      box-shadow: inset -8px -10px 16px rgba(0,0,0,.12);
-      animation:floatUp linear forwards;
-      z-index:30; pointer-events:none;
+    .tile img{width:100%; height:100%; object-fit:cover; display:block; filter:blur(0)}
+    .tile.locked img{filter:blur(14px) grayscale(20%)}
+    .lock-overlay{
+      position:absolute; inset:0; display:grid; place-items:center;
+      background:linear-gradient(to bottom, rgba(255,255,255,.55), rgba(255,255,255,.75));
+      color:#333; font-weight:700; text-align:center; padding:10px;
     }
-    .balloon::after{
-      content:''; position:absolute; left:50%; top:98%; width:2px; height:48px; background:#d7d7d7;
+    .tile.locked .lock-overlay{display:grid}
+    .tile.unlocked .lock-overlay{display:none}
+
+    /* Lightbox */
+    #lightbox{position:fixed; inset:0; background:rgba(0,0,0,.75); display:none; place-items:center; z-index:80}
+    #lightbox.show{display:grid}
+    #lightbox img{max-width:92vw; max-height:88vh; border-radius:14px; box-shadow:0 24px 60px rgba(0,0,0,.35)}
+    #lightbox .close{position:absolute; top:14px; right:14px; background:#fff; border:0; border-radius:999px; padding:.5rem .8rem; font-weight:800; cursor:pointer}
+
+    /* Confetti and fireworks canvases */
+    canvas#confetti, canvas#fireworks{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:1}
+
+    /* Preview banner */
+    #previewBanner{
+      position:fixed; top:12px; left:50%; transform:translateX(-50%);
+      background:#222; color:#fff; padding:.45rem .8rem; border-radius:999px; font-size:.9rem;
+      opacity:.9; z-index:90; display:none;
     }
-    @keyframes floatUp{to{transform:translateY(-120vh) translateX(var(--drift,0px)); opacity:0}}
-
-    /* Confetti canvas and fireworks canvas */
-    canvas#confetti, canvas#fireworks{position:fixed; inset:0; width:100%; height:100%; pointer-events:none; z-index:40}
-
-    /* Share toast */
-    #toast{position:fixed; left:50%; bottom:20px; transform:translateX(-50%); background:#222; color:#fff; padding:.6rem 1rem; border-radius:999px; font-size:.95rem; opacity:0; transition:opacity .25s ease; z-index:80}
-    #toast.show{opacity:.95}
+    #previewBanner.show{display:block}
   </style>
 </head>
 <body>
 
-  <main class="card" role="main">
+  <main class="card" role="main" aria-label="Birthday card">
     <div class="emoji-row" aria-hidden="true">🎂🎈✨💖</div>
 
     <h1><span id="type">Happy Birthday, Vidhi!</span></h1>
 
-    <p class="sub" id="sub">
-      Jarnil wishes you the happiest birthday and loves you forever.
-    </p>
+    <p class="sub" id="sub">Jarnil wishes you the happiest birthday and loves you forever.</p>
 
-    <div class="bar" id="bar">
+    <div class="bar">
       <span class="pill" id="toPill">For: Vidhi</span>
       <span class="pill" id="fromPill">From: Jarnil</span>
-      <span class="pill" id="agePill" hidden>Age: <span id="ageVal"></span></span>
-      <span class="pill" id="datePill" hidden>Birthday: <span id="dateVal"></span></span>
+      <span class="pill" id="datePill">Unlocks: 15‑02‑2026, 12:00 am</span>
     </div>
 
     <div class="panel">
       <div class="countdown" id="countdown">Counting down to your special day…</div>
-      <div class="mini" id="countMini">Provide ?date=YYYY-MM-DD to enable the live countdown.</div>
+      <div class="mini" id="countMini">This shows days, hours, minutes, and seconds to 15‑02‑2026 at 12:00 am.</div>
     </div>
 
     <div class="btns">
       <button class="primary" id="wishBtn">Make a wish ✨</button>
       <button class="secondary" id="confettiBtn">More confetti 🎉</button>
-      <button class="secondary" id="shareBtn">Share this link 🔗</button>
-      <button class="secondary" id="musicBtn" hidden>Play music 🎵</button>
+      <!-- Share button removed as requested -->
     </div>
 
-    <div class="carousel" id="carousel"></div>
+    <section class="gallery" id="gallery" aria-label="Photo gallery">
+      <!-- Replace photo1.jpg and photo2.jpg with your actual file names after uploading -->
+      <figure class="tile locked" data-src="photo1.jpg">
+        <img src="photo1.jpg" alt="Photo 1, locked until 15 February" loading="lazy">
+        <figcaption class="lock-overlay">Opens at 12:00 am, 15 Feb</figcaption>
+      </figure>
+      <figure class="tile locked" data-src="photo2.jpg">
+        <img src="photo2.jpg" alt="Photo 2, locked until 15 February" loading="lazy">
+        <figcaption class="lock-overlay">Opens at 12:00 am, 15 Feb</figcaption>
+      </figure>
+    </section>
   </main>
 
-  <div id="toast" role="status" aria-live="polite">Link copied</div>
+  <div id="previewBanner">Preview mode is on — photos are unlocked for you</div>
+
+  <div id="lightbox" aria-modal="true" role="dialog">
+    <button class="close" id="closeLightbox" aria-label="Close">✕</button>
+    <img id="lightboxImg" alt="">
+  </div>
 
   <canvas id="confetti"></canvas>
   <canvas id="fireworks"></canvas>
 
-  <!-- Optional local music: upload a file named music.mp3 in the repo root to enable -->
-  <audio id="music" src="music.mp3" preload="none"></audio>
-
   <script>
-    /* ------------------------- helpers & personalisation ------------------------- */
-    const qs = new URLSearchParams(location.search);
-    const toName   = (qs.get('name') || 'Vidhi').replace(/[<>]/g,'').trim();
-    const fromName = (qs.get('from') || 'Jarnil').replace(/[<>]/g,'').trim();
-    const dateStr  = (qs.get('date') || '').trim(); // YYYY-MM-DD
+    /* Personalisation (static defaults, but you may pass ?name= and ?from= if you like) */
+    const params = new URLSearchParams(location.search);
+    const toName   = (params.get('name') || 'Vidhi').replace(/[<>]/g,'').trim();
+    const fromName = (params.get('from') || 'Jarnil').replace(/[<>]/g,'').trim();
+    const isPreview = params.get('preview') === '1';
 
-    // Title and prominent text
-    document.title = `Happy Birthday, ${toName}! 🎂`;
     const typeText = `Happy Birthday, ${toName}!`;
-    const sub = document.getElementById('sub');
-    sub.textContent = `${fromName} wishes you the happiest birthday and loves you forever.`;
-
-    // Pills
-    document.getElementById('toPill').textContent = `For: ${toName}`;
+    document.title = `${typeText} 🎂`;
+    document.getElementById('sub').textContent = `${fromName} wishes you the happiest birthday and loves you forever.`;
+    document.getElementById('toPill').textContent   = `For: ${toName}`;
     document.getElementById('fromPill').textContent = `From: ${fromName}`;
 
-    // Typewriter effect
+    /* Typewriter headline */
     const typeEl = document.getElementById('type');
     typeEl.textContent = '';
-    let i=0;
-    function typeNext(){
-      if(i <= typeText.length){
-        typeEl.textContent = typeText.slice(0,i++);
-        setTimeout(typeNext, 60);
-      }
-    }
-    typeNext();
+    let ti = 0;
+    (function typeNext(){ if (ti <= typeText.length) { typeEl.textContent = typeText.slice(0, ti++); setTimeout(typeNext, 60); } })();
 
-    /* ---------------------------- countdown and age ----------------------------- */
-    const cdEl   = document.getElementById('countdown');
-    const miniEl = document.getElementById('countMini');
-    const agePill= document.getElementById('agePill');
-    const ageVal = document.getElementById('ageVal');
-    const datePill=document.getElementById('datePill');
-    const dateVal=document.getElementById('dateVal');
+    /* Target unlock: 15-02-2026 00:00:00 local time (DD-MM-YYYY) */
+    // Months are 0-based in JS Date, so February is 1
+    const unlockAt = new Date(2026, 1, 15, 0, 0, 0);
 
-    let targetDate = null;
-    if (/^\d{4}-\d{2}-\d{2}$/.test(dateStr)) {
-      targetDate = new Date(dateStr + 'T00:00:00');
-      datePill.hidden = false;
-      dateVal.textContent = targetDate.toDateString();
-
-      // Age display uses year difference as of this calendar year
-      const now = new Date();
-      let age = now.getFullYear() - targetDate.getFullYear();
-      const hasHadBirthday = (now.getMonth() > targetDate.getMonth()) ||
-                             (now.getMonth() === targetDate.getMonth() && now.getDate() >= targetDate.getDate());
-      if(!hasHadBirthday) age -= 1;
-      if (age >= 0 && age < 150) {
-        agePill.hidden = false;
-        ageVal.textContent = age;
-      }
-      miniEl.textContent = 'Live countdown is enabled.';
-    }
-
+    /* Countdown */
+    const cdEl = document.getElementById('countdown');
+    const mini = document.getElementById('countMini');
     function updateCountdown(){
-      if(!targetDate){
-        cdEl.textContent = 'Counting down to your special day…';
-        return;
-      }
       const now = new Date();
-      // Next birthday occurrence this year or next
-      const next = new Date(now.getFullYear(), targetDate.getMonth(), targetDate.getDate());
-      if (next < now) next.setFullYear(now.getFullYear() + 1);
-      const diff = next - now;
-
-      if (Math.abs((new Date(now.getFullYear(), targetDate.getMonth(), targetDate.getDate())) - now) < 24*60*60*1000 &&
-          now.getDate() === targetDate.getDate() && now.getMonth() === targetDate.getMonth()) {
-        cdEl.textContent = 'It is your day today – happy birthday!';
-        miniEl.textContent = 'Sending sparkles and love all day.';
+      const diff = unlockAt - now;
+      if (diff <= 0) {
+        cdEl.textContent = 'It is today — happy birthday!';
+        mini.textContent = 'Photos are now unlocked below.';
+        unlockGallery();
         return;
       }
       const d = Math.floor(diff / (24*60*60*1000));
@@ -269,16 +194,17 @@
       const s = Math.floor((diff % (60*1000)) / 1000);
       cdEl.textContent = `Countdown: ${d} days, ${h} hours, ${m} minutes, ${s} seconds`;
     }
-    setInterval(updateCountdown, 1000); updateCountdown();
+    setInterval(updateCountdown, 1000);
+    updateCountdown();
 
-    /* ----------------------------- confetti engine ----------------------------- */
+    /* Confetti engine */
     (function(){
       const canvas = document.getElementById('confetti');
       const ctx = canvas.getContext('2d'); let W,H, pieces=[], running=false;
       function resize(){ W=canvas.width=innerWidth; H=canvas.height=innerHeight; }
       addEventListener('resize', resize); resize();
 
-      function spawn(n=200){
+      function spawn(n=220){
         for(let i=0;i<n;i++){
           pieces.push({
             x:Math.random()*W, y:-10,
@@ -301,10 +227,10 @@
         }
         if(pieces.length) requestAnimationFrame(loop); else running=false;
       }
-      window.fireConfetti = () => { spawn(220); setTimeout(()=>spawn(180), 320); }
+      window.fireConfetti = () => { spawn(240); setTimeout(()=>spawn(180), 320); }
     })();
 
-    /* ------------------------------- fireworks -------------------------------- */
+    /* Fireworks */
     (function(){
       const canvas = document.getElementById('fireworks');
       const ctx = canvas.getContext('2d'); let W,H, sparks=[];
@@ -343,6 +269,76 @@
       };
     })();
 
-    /* -------------------------------- balloons -------------------------------- */
+    /* Balloons */
     function launchBalloons(durationMs=4000){
       const end = Date.now() + durationMs;
+      const cols = ['#ff7aa2','#ffd166','#9be7ff','#c8b6ff','#baffc9','#ffafcc'];
+      const timer = setInterval(()=>{
+        for(let i=0;i<5;i++){
+          const b=document.createElement('div');
+          b.className='balloon';
+          b.style.position='fixed';
+          b.style.bottom='-120px';
+          b.style.left = Math.random()*100 + 'vw';
+          b.style.setProperty('--drift', (Math.random()*120-60)+'px');
+          b.style.animation = `floatUp ${6+Math.random()*3}s linear forwards`;
+          b.style.transform = `scale(${0.8 + Math.random()*0.8})`;
+          b.style.width='36px'; b.style.height='44px';
+          b.style.borderRadius='50% 50% 48% 48%';
+          b.style.background = 'radial-gradient(circle at 30% 30%, #fff7 0, #fff2 24%, transparent 26%)';
+          b.style.boxShadow = 'inset -8px -10px 16px rgba(0,0,0,.12)';
+          b.style.zIndex='5';
+          document.body.appendChild(b);
+          setTimeout(()=>b.remove(), 10000);
+        }
+        if(Date.now()>end) clearInterval(timer);
+      }, 180);
+    }
+
+    /* Gallery lock/unlock and lightbox */
+    const gallery = document.getElementById('gallery');
+    const tiles = Array.from(gallery.querySelectorAll('.tile'));
+    const lightbox = document.getElementById('lightbox');
+    const lightboxImg = document.getElementById('lightboxImg');
+    const closeLightbox = document.getElementById('closeLightbox');
+
+    function unlockGallery(){
+      tiles.forEach(t => {
+        t.classList.remove('locked');
+        t.classList.add('unlocked');
+        t.querySelector('img').setAttribute('alt','Photo (unlocked)');
+        t.addEventListener('click', ()=> openLightbox(t.dataset.src), { once:false });
+      });
+    }
+    function openLightbox(src){
+      lightboxImg.src = src;
+      lightbox.classList.add('show');
+    }
+    function closeLB(){ lightbox.classList.remove('show'); lightboxImg.src=''; }
+    closeLightbox.addEventListener('click', closeLB);
+    lightbox.addEventListener('click', (e)=>{ if(e.target === lightbox) closeLB(); });
+
+    /* Buttons */
+    const wishBtn = document.getElementById('wishBtn');
+    const moreBtn = document.getElementById('confettiBtn');
+
+    wishBtn.addEventListener('click', ()=>{
+      fireConfetti && fireConfetti();
+      fireFireworks && fireFireworks(6);
+      launchBalloons(5000);
+    });
+    moreBtn.addEventListener('click', ()=> fireConfetti && fireConfetti());
+
+    /* First load effects */
+    fireConfetti && fireConfetti();
+    launchBalloons(3000);
+
+    /* Preview mode for private testing */
+    const previewBanner = document.getElementById('previewBanner');
+    if (isPreview) {
+      previewBanner.classList.add('show');
+      unlockGallery();
+    }
+  </script>
+</body>
+</html>
